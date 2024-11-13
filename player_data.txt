@@ -1,0 +1,9 @@
+A 
+WOLF1  BEAR4  EMBER2
+~
+6  2
+---
+B
+MOUSE1  DRAGON2 PHOENIX1
+.
+5  9
