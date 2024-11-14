@@ -99,6 +99,42 @@ class Player():
         elif move == "D":
             self.moveRight()
             
+    def inBounds(self, move):
+         #Checking player's location
+            if move == "W":
+                if (self.y_position - 1 >= 5 and self.biome in "~&") or (self.y_position - 1 >= 0 and self.biome in "*^."):
+                    return True
+                else:
+                    return False
+            if move == "S":
+                if (self.y_position + 1 <= 9 and self.biome in "~&") or (self.y_position + 1 <= 14 and self.biome in "*^."):
+                    return True
+                else:
+                    return False
+            if move == "A":
+                if (self.x_position - 1 >= 5 and self.biome in "^*") or (self.x_position - 1 >= 0 and self.biome in "~.&"):
+                    return True
+                else:
+                    return False
+            else:
+                if (self.x_position + 1 <= 9 and self.biome in "^*") or (self.x_position + 1 <= 14 and self.biome in "~.&"):
+                    return True
+                else:
+                    return False
+            
+    def enterBiome(self):
+        #Print out which biome the player is joining
+        if self.biome == "^":
+            print(f"Player {self.name} is now entering the Mountain Biome")
+        elif self.biome == "~":
+            print(f"Player {self.name} is now entering the Water Biome")
+        elif self.biome == "&":
+            print(f"Player {self.name} is now entering the Fire Biome")
+        elif self.biome == "*":
+            print(f"Player {self.name} is now entering the Home Biome")
+        else:
+            print(f"Player {self.name} is now entering the City Biome")
+            
     def displayInventory(self):
         if len(self.inventory) == 0:
             print(f"Player {self.name} has no Pokemon in their inventory!")
@@ -111,7 +147,9 @@ class Player():
                     print(f"\t{pokemon.getName()} - Level {pokemon.getLevel()}")
 
     def trainPokemon(self, trainee):
+        #Goes iterates through each pokemon
         for pokemon in self.inventory:
+            #Retrieves the string name from each pokemon to easily compare and trains the pokemon
             if pokemon.getName() == trainee:
                 if pokemon.getLevel() >= 5:
                     print(f"{pokemon.getName()}'s level is maxed out! Select train again or select another option!")

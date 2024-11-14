@@ -168,64 +168,7 @@ for i in range(len(board)):
 #potential method for finding player chords where ‘x’ would be player char
 '''
 
-def inBounds(user, move):
-    #Checking player A's location
-    if user == "A":
-        if move == "W":
-            if (playerA.getY() - 1 >= 5 and playerA.getBiome() in "~&") or (playerA.getY() - 1 >= 0 and playerA.getBiome() in "*^."):
-                return True
-            else:
-                return False
-        if move == "S":
-            if (playerA.getY() + 1 <= 9 and playerA.getBiome() in "~&") or (playerA.getY() + 1 <= 14 and playerA.getBiome() in "*^."):
-                return True
-            else:
-                return False
-        if move == "A":
-            if (playerA.getX() - 1 >= 5 and playerA.getBiome() in "^*") or (playerA.getX() - 1 >= 0 and playerA.getBiome() in "~.&"):
-                return True
-            else:
-                return False
-        else:
-            if (playerA.getX() + 1 <= 9 and playerA.getBiome() in "^*") or (playerA.getX() + 1 <= 14 and playerA.getBiome() in "~.&"):
-                return True
-            else:
-                return False
-    
-    #Checking player B's location        
-    else:
-        if move == "W":
-            if (playerB.getY() - 1 >= 5 and playerB.getBiome() in "~&") or (playerB.getY() - 1 >= 0 and playerB.getBiome() in "*^."):
-                return True
-            else:
-                return False
-        elif move == "S":
-            if (playerB.getY() + 1 <= 9 and playerB.getBiome() in "~&") or (playerB.getY() + 1 <= 14 and playerB.getBiome() in "*^."):
-                return True
-            else:
-                return False
-        elif move == "A":
-            if (playerB.getX() - 1 >= 5 and playerB.getBiome() in "^*") or (playerB.getX() - 1 >= 0 and playerB.getBiome() in "~.&"):
-                return True
-            else:
-                return False
-        else:
-            if (playerB.getX() + 1 <= 9 and playerB.getBiome() in "^*") or (playerB.getX() + 1 <= 14 and playerB.getBiome() in "~.&"):
-                return True
-            else:
-                return False
  
-def enterBiome(player, biome): 
-    if biome == "^":
-        print(f"Player {player} is now entering the Mountain Biome")
-    elif biome == "~":
-        print(f"Player {player} is now entering the Water Biome")
-    elif biome == "&":
-        print(f"Player {player} is now entering the Fire Biome")
-    elif biome == "*":
-        print(f"Player {player} is now entering the Home Biome")
-    else:
-        print(f"Player {player} is now entering the City Biome")
         
 def battleCheck():
     if playerA.getX() == playerB.getX() and playerA.getY() == playerB.getY():
@@ -238,6 +181,14 @@ def battle():
     else:
         print("Player B has challeged Player A to a battle!")
 
+def printBoard():
+    for i in range(15):
+        for j in range(15):
+            print(board[i][j], end = " ")
+        print()
+    print()
+    
+
 #Prompting the players for a turn
 turncount = 0
 action = ""
@@ -248,75 +199,63 @@ while (action != "quit"):
         name = "B"
     
     #Assigning original or loaded locations of the Players
-    board[playerA.getX()][playerA.getY()] = "A"
-    board[playerB.getX()][playerB.getY()] = "B"
+    board[playerA.getY()][playerA.getX()] = "A"
+    board[playerB.getY()][playerB.getX()] = "B"
     
     #Printing the board for the start of the game    
-    if turncount == 0:
-        for i in range(15):
-            for j in range(15):
-                print(board[i][j], end = " ")
-            print()
-        print()
+    printBoard()
     
     action = input(f"Player {name} please enter an option (inventory/move/train/quit): ")
     
     if action == "move":
         move = input("Please enter a move (W, A, S, D): ").strip().upper()
-        while move not in ["W", "A", "S", "D"] and inBounds():
+        while move not in ["W", "A", "S", "D"]:
             move = input("Invalid input. Please enter a move (W, A, S, D): ").strip().upper()
-        if name == "A" and inBounds("A", move):
+        if name == "A" and playerA.inBounds(move):
             #Resetting the previous location back to the old biome, moving the player
-            board[playerA.getX()][playerA.getY()] = playerA.getBiome()
+            board[playerA.getY()][playerA.getX()] = playerA.getBiome()
             old_biome = playerA.getBiome()
             playerA.move(move)
             
             #Setting the new biome tag to the new location, assigning the player to the new position
-            playerA.setBiome(board[playerA.getX()][playerA.getY()])
-            board[playerA.getX()][playerA.getY()] = "A"
+            playerA.setBiome(board[playerA.getY()][playerA.getX()])
+            board[playerA.getY()][playerA.getX()] = "A"
 
             #Printing the board
-            for i in range(15):
-                for j in range(15):
-                    print(board[i][j], end = " ")
-                print()
-            print()
+            printBoard()
 
             #Checks new biome against old biome to see if we changed biomes
             new_biome = playerA.getBiome()
             if old_biome != new_biome:
-                enterBiome("A", playerA.getBiome())
+                playerA.enterBiome()
             
             #Checking for a battle
             battleCheck()
             
-        elif name == "B" and inBounds("B", move):
+        elif name == "B" and playerB.inBounds(move):
             #Resetting the previous location back to the old biome, moving the player
-            board[playerB.getX()][playerB.getY()] = playerB.getBiome()
+            board[playerB.getY()][playerB.getX()] = playerB.getBiome()
             old_biome = playerB.getBiome()
             playerB.move(move)
             
             #Setting the new biome tag to the new location, assigning the player to the new position
-            playerB.setBiome(board[playerB.getX()][playerB.getY()])
-            board[playerB.getX()][playerB.getY()] = "B"
+            playerB.setBiome(board[playerB.getY()][playerB.getX()])
+            board[playerB.getY()][playerB.getX()] = "B"
             
             #Printing the board
-            for i in range(15):
-                for j in range(15):
-                    print(board[i][j], end = " ")
-                print()
-            print()
+            printBoard()
             
             #Checks new biome against old biome to see if we changed biomes
             new_biome = playerB.getBiome()
             if old_biome != new_biome:
-                enterBiome("B", playerB.getBiome())
+                playerB.enterBiome()
 
             #Checking for a battle
             battleCheck()
     
         else:
             print("Sorry, that move is not inbounds! Please try again!")
+            turncount -=1
     
     elif action == "inventory":
         if name == "A":
