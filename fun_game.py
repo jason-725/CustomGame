@@ -91,6 +91,36 @@ pk_bigfoot = Pokemon("BIGFOOT", "EARTH", 100, 35, 0, 60, 1, "^")
 #Creating THE legendary pokemon
 pk_frodo = Pokemon("FRODO SPEARS", "LEGENDARY", 200, 100, 0, 0, 1, ".")
 
+#create a list of the pokemon object to sort through
+list_of_pokemon_types = [pk_mouse, pk_hawk, pk_wolf, pk_bear, 
+                         pk_ember, pk_fire_dweller, pk_dragon, pk_phoenix, 
+                         pk_clam, pk_swordfish, pk_nessie, pk_megalodon, 
+                         pk_sprout, pk_poison_ivy, pk_giant_sequoia, pk_bigfoot, 
+                         pk_frodo]
+
+
+# test = ["MOUSE", "NESSIE"]
+#Delcare the array that the player's inventory that pokemon will be adding into
+populated_playerA_inv = []
+#playerOneProfile is the saved list of pokemon names in previous safe file
+#Go through the list and find the pokemon previously caught
+for name in playerOneProfile[1]:
+    for pokemon in list_of_pokemon_types:
+        if pokemon.getName() == name:
+            #Add the found pokemon to the array
+            populated_playerA_inv.append(pokemon)
+            
+#Delcare the array that the player's inventory that pokemon will be adding into            
+# test = ["SPROUT", "MEGALODON"]
+populated_playerB_inv = []
+#playerTwoProfile is the saved list of pokemon names in previous safe file
+#Go through the list and find the pokemon previously caught
+for name in playerTwoProfile[1]:
+    for pokemon in list_of_pokemon_types:
+        if pokemon.getName() == name:
+            #Add the found pokemon to the array
+            populated_playerB_inv.append(pokemon)
+
 #Creating two player objects
 playerA = Player(playerOneProfile[0][0], int(playerOneProfile[3][0]), int(playerOneProfile[3][1]), playerOneProfile[1], playerOneProfile[2][0])
 playerB = Player(playerTwoProfile[0][0], int(playerTwoProfile[3][0]), int(playerTwoProfile[3][1]), playerTwoProfile[1], playerOneProfile[2][0])
@@ -290,28 +320,58 @@ while (action != "quit"):
     
     elif action == "inventory":
         if name == "A":
-            print(f"Player {name}'s inventory: \n{playerA.displayInventory()}")
+            playerA.displayInventory()
         else:
-            print(f"Player {name}'s inventory: \n{playerB.displayInventory()}")
+            playerB.displayInventory()
         turncount -= 1
             
     elif action == "train":
+        #Check which player is training
         if name == "A":
+            #Let the user know what level their pokemon are at
             playerA.displayInventory()
-            trainee = input("Which Pokemon would you like to train?").upper().strip()
-            while trainee not in playerA.getInventory():
-                trainee = input("Pokemon not found in inventory. Please select a Pokemon in your inventroy").upper().strip()
-                print(playerA.getInventory())
-            if trainee in playerA.displayInventory():
-                playerA.trainPokemon(trainee)
+            #store the inventory into a temporary varibale that can be checked with
+            inv = playerA.getInventoryAsString()
+            #if the user has no pokemon, they can't train their pokemon
+            if len(inv) <= 0:
+                print("You have no Pokemon to train! Please select another option!")
+                turncount -= 1
+            else:
+                #asks the user which pokemon they want to train
+                trainee = input("Which Pokemon would you like to train? \n").upper().strip()
+                #if they didn't type in a pokemon that is in the list keep asking until they do
+                while trainee not in inv and len(inv) > 0:
+                    trainee = input("Pokemon not found in inventory. Please select a Pokemon in your inventroy: \n").upper().strip()
+                    playerA.displayInventory()
+                if trainee in inv:
+                    #trains the pokemon by adding a level to the pokemon
+                    #the method returns a 1 if the pokemon is already at level 5 which allows the user to select another option
+                    #the method returns a 0 if the pokemon is not at level 5 and continues alternating players
+                    turncount -= playerA.trainPokemon(trainee)
+
+            
         else:
+            #Let the user know what level their pokemon are at
             playerB.displayInventory()
-            trainee = input("Which Pokemon would you like to train?").upper().strip()
-            while trainee not in playerB.getInventory():
-                trainee = input("Pokemon not found in inventory. Please select a Pokemon in your inventroy").upper().strip()
-                print(playerB.getInventory())
-            if trainee in playerB.getInventory():
-                playerB.trainPokemon(trainee)
+            #store the inventory into a temporary varibale that can be checked with
+            inv = playerB.getInventoryAsString()
+            #if the user has no pokemon, they can't train their pokemon
+            if len(inv) <= 0:
+                print("You have no Pokemon to trian! Please select another option!")
+                turncount -= 1
+            else: 
+                #asks the user which pokemon they want to train
+                trainee = input("Which Pokemon would you like to train? \n").upper().strip()
+                #if they didn't type in a pokemon that is in the list keep asking until they do
+                while trainee not in inv and len(inv) > 0:
+                    trainee = input("Pokemon not found in inventory. Please select a Pokemon in your inventroy: \n").upper().strip()
+                    playerA.displayInventory()
+                if trainee in inv:
+                    #trains the pokemon by adding a level to the pokemon
+                    #the method returns a 1 if the pokemon is already at level 5 which allows the user to select another option
+                    #the method returns a 0 if the pokemon is not at level 5 and continues alternating players
+                    turncount -= playerB.trainPokemon(trainee)
+        
         
     elif action == "quit":
         break   

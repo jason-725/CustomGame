@@ -65,6 +65,12 @@ class Player():
     def getInventory(self):
         return self.inventory
     
+    def getInventoryAsString(self):
+        inv = []
+        for pokemon in self.inventory:
+            inv.append(pokemon.getName())
+        return inv
+    
     def getBiome(self):
         return self.biome
     
@@ -94,11 +100,24 @@ class Player():
             self.moveRight()
             
     def displayInventory(self):
-        for pokemon in self.inventory:
-            print(f"{pokemon.getName()} - Level {pokemon.getLevel()}")
+        if len(self.inventory) == 0:
+            print(f"Player {self.name} has no Pokemon in their inventory!")
+        else:
+            print(f"Player {self.name}'s inventory:")
+            for pokemon in self.inventory:
+                if pokemon.getLevel() >= 5:
+                    print(f"\t{pokemon.getName()} - Level {pokemon.getLevel()} (MAX LEVEL)")
+                else:
+                    print(f"\t{pokemon.getName()} - Level {pokemon.getLevel()}")
 
     def trainPokemon(self, trainee):
         for pokemon in self.inventory:
             if pokemon.getName() == trainee:
-                pokemon.train()
+                if pokemon.getLevel() >= 5:
+                    print(f"{pokemon.getName()}'s level is maxed out! Select train again or select another option!")
+                    return 1
+                else:
+                    pokemon.train()
+                    print(f"{pokemon.getName()} leveled up to level {pokemon.getLevel()}!")
+                    return 0
             
