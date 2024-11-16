@@ -12,6 +12,7 @@
 # Date: 4 11 2024
 
 from game_classes import Pokemon, Player
+import random
 
 #Welcome Message
 print("Welcome to the Pokemon Game!")
@@ -175,13 +176,17 @@ for i in range(len(board)):
 def battleCheck():
     if playerA.getX() == playerB.getX() and playerA.getY() == playerB.getY():
         battle()
+        battlestatus = True
+        return battlestatus
 
 def battle():
     #Code for when the two players battle
     if turncount % 2 == 0:
-        print("Player A has challeged Player B to a battle!")
+        print("Player A has challenged Player B to a battle!")
     else:
-        print("Player B has challeged Player A to a battle!")
+        print("Player B has challenged Player A to a battle!")
+    
+
 
 def printBoard():
     for i in range(15):
@@ -475,6 +480,8 @@ def battleScenario(attacker, defender, pokeA, pokeB, histA, histB):
             pokeB = pokeChoose(defender)
     battlestatus = True
     return pokeA, pokeB, histA, histB, battlestatus
+            
+    
 
 #Prompting the players for a turn
 battlestatus = False
@@ -485,6 +492,7 @@ histB = []
 turncount = 0
 action = ""
 while (action != "quit"):
+    
     if turncount % 2 == 0:
         name = "A"
     else:
@@ -528,6 +536,7 @@ while (action != "quit"):
         
         # if youre in combat, the loop skips over printing the board and player options
         continue
+        
     #Assigning original or loaded locations of the Players
     board[playerA.getY()][playerA.getX()] = "A"
     board[playerB.getY()][playerB.getX()] = "B"
@@ -560,7 +569,7 @@ while (action != "quit"):
                 playerA.enterBiome()
             
             #Checking for a battle
-            battleCheck()
+            battlestatus = battleCheck()
             
         elif name == "B" and playerB.inBounds(move):
             #Resetting the previous location back to the old biome, moving the player
