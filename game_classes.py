@@ -1,5 +1,5 @@
 class Pokemon():
-    def __init__(self, name, type, health, damage, dodge, defense, level, biome):
+    def __init__(self, name, type, health, damage, dodge, defense, level, biome, ap):
         self.name = name
         self.type = type
         self.health = health
@@ -8,6 +8,7 @@ class Pokemon():
         self.defense = defense
         self.level = level
         self.biome = biome
+        self.ap = ap
     
     def getName(self):
         return self.name
@@ -32,6 +33,9 @@ class Pokemon():
     
     def getBiome(self):
         return self.biome
+        
+    def getAp(self):
+        return self.ap
 
     def train(self):
         self.level += 1
