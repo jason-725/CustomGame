@@ -2,7 +2,7 @@ import random
 
 
 class Pokemon():
-    def __init__(self, name, type, health, damage, dodge, defense, level, biome):
+    def __init__(self, name, type, health, damage, dodge, defense, level, biome, ap):
         self.name = name
         self.type = type
         self.health = health
@@ -11,6 +11,7 @@ class Pokemon():
         self.defense = defense
         self.level = level
         self.biome = biome
+        self.ap = ap
     
     def getName(self):
         return self.name
@@ -35,6 +36,9 @@ class Pokemon():
     
     def getBiome(self):
         return self.biome
+        
+    def getAp(self):
+        return self.ap
 
     def train(self):
         self.level += 1
@@ -185,7 +189,7 @@ class Player():
                     print(f"{pokemon.getName()} leveled up to level {pokemon.getLevel()}!")
                     return 0
                 
-    def catchPokemon(self):
+        def catchPokemon(self):
         #returns a number between 0-1
         rarity_chance = random.random()
         pokemon = None
@@ -284,4 +288,5 @@ class Player():
             datFile.write('---\n')
         #not sure what we want to do here with the --- at the end of the file. shouldn't matter?
         # datFile.write(f'{playerB.getName()}\n')
+            
             
