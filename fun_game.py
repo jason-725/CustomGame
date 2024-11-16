@@ -11,7 +11,7 @@
 # Assignment: Week 13 Team Lab - Custom Pokemon Assignment
 # Date: 4 11 2024
 
-from game_classes import Pokemon, Player
+from game_classes import Pokemon, FirePokemon, NormalPokemon, WaterPokemon, EarthPokemon, Player
 
 #Welcome Message
 print("Welcome to the Pokemon Game!")
@@ -64,39 +64,79 @@ while True:
         break
 poke_roster = ['MOUSE', 'HAWK', 'WOLF', 'BEAR', 'EMBER', 'FLAME DWELLER', 'DRAGON', 'PHOENIX', 'CLAM', 'SWORDFISH', 'NESSIE', 'MEGALODON', 'SPROUT', 'POISON IVY', 'GIANT SEQUOIA', 'BIGFOOT', 'FRODO SPEARS']
 
-#Creating 4 normal pokemon, normal pokemon generally specialize in HEALTH
-pk_mouse = Pokemon("MOUSE", "NORMAL", 30, 10, 15, 0, 1, "*")
-pk_hawk = Pokemon("HAWK", "NORMAL", 50, 25, 20, 0, 1, "*")
-pk_wolf = Pokemon("WOLF", "NORMAL", 90, 30, 20, 10, 1, "*")
-pk_bear = Pokemon("BEAR", "NORMAL", 150, 40, 10, 30, 1, "*")
-
-#Creating 4 fire pokemon, fire pokemon generally specialize in DAMAGE
-pk_ember = Pokemon("EMBER", "FIRE", 15, 25, 5, 0, 1, "&")
-pk_fire_dweller = Pokemon("FLAME DWELLER", "FIRE", 30, 30, 0, 15, 1, "&")
-pk_dragon = Pokemon("DRAGON", "FIRE", 60, 45, 15, 10, 1, "&")
-pk_phoenix = Pokemon("PHOENIX", "FIRE", 75, 65, 10, 15, 1, "&")
-
-#Creating 4 water pokemon, water pokemon generally specialize in DODGE
-pk_clam = Pokemon("CLAM", "WATER", 25, 10, 30, 15, 1, "~")
-pk_swordfish = Pokemon("SWORDFISH", "WATER", 45, 25, 35, 0, 1, "~")
-pk_nessie = Pokemon("NESSIE", "WATER", 75, 30, 40, 10, 1, "~")
-pk_megalodon = Pokemon("MEGALODON", "WATER", 100, 45, 45, 20, 1, "~")
-
-#Creating 4 earth pokemon, earth pokemon generally specialize in DEFENSE
-pk_sprout = Pokemon("SPROUT", "EARTH", 20, 5, 0, 30, 1, "^")
-pk_poison_ivy = Pokemon("POISON IVY", "EARTH", 40, 30, 0, 35, 1, "^")
-pk_giant_sequoia = Pokemon("GIANT SEQUOIA", "EARTH", 45, 25, 0, 45, 1, "^")
-pk_bigfoot = Pokemon("BIGFOOT", "EARTH", 100, 35, 0, 60, 1, "^")
 
 #Creating THE legendary pokemon
-pk_frodo = Pokemon("FRODO SPEARS", "LEGENDARY", 200, 100, 0, 0, 1, ".")
+# pk_frodo = Pokemon("FRODO SPEARS", "LEGENDARY", 200, 100, 0, 0, 1, ".")
 
-#create a list of the pokemon object to sort through
-list_of_pokemon_types = [pk_mouse, pk_hawk, pk_wolf, pk_bear, 
-                         pk_ember, pk_fire_dweller, pk_dragon, pk_phoenix, 
-                         pk_clam, pk_swordfish, pk_nessie, pk_megalodon, 
-                         pk_sprout, pk_poison_ivy, pk_giant_sequoia, pk_bigfoot, 
-                         pk_frodo]
+# Factory method to create a Pokemon
+def create_pokemon(name):
+    # Example Pokemon data (name -> type)
+    pokemon_types = {
+        "MOUSE": "NORMAL",
+        "HAWK": "NORMAL",
+        "WOLF": "NORMAL",
+        "BEAR": "NORMAL",
+        "EMBER": "FIRE",
+        "FLAME DWELLER" : "FIRE",
+        "DRAGON" : "FIRE",
+        "PHOENIX" : "FIRE",
+        "CLAM": "WATER",
+        "SWORDFISH": "WATER",
+        "NESSIE": "WATER",
+        "MEGALODON": "WATER",
+        "SPROUT":"EARTH",
+        "POISON IVY":"EARTH",
+        "GIANT SEQUOIA":"EARTH",
+        "BIGFOOT":"EARTH"
+    }
+    
+    # Check if the pokemon name exists in the dictionary
+    if name not in pokemon_types:
+        
+        raise ValueError(f"No known Pokemon with name {name}")
+    
+    # Determine the type of the Pokemon
+    type = pokemon_types[name]
+    
+    level = 1
+    
+    # Create the correct subclass based on type
+    if type == "FIRE":
+        if name == "EMBER":
+            return FirePokemon("EMBER", "FIRE", 15, 25, 5, 0, 1, "&")
+        elif name == "FLAME DWELLER":
+            return FirePokemon("FLAME DWELLER", "FIRE", 15, 25, 5, 0, 1, "&")
+        elif name == "DRAGON":
+            return FirePokemon("DRAGON", "FIRE", 30, 30, 0, 15, 1, "&")
+        elif name == "PHOENIX":
+            return FirePokemon("PHOENIX", "FIRE", 75, 65, 10, 15, 1, "&")
+    elif type == "WATER":
+        if name == "CLAM":
+            return WaterPokemon("CLAM", "WATER", 25, 10, 30, 15, 1, "~")
+        elif name == "SWORDFISH":
+            return WaterPokemon("SWORDFISH", "WATER", 45, 25, 35, 0, 1, "~")
+        elif name == "NESSIE":
+            return WaterPokemon("NESSIE", "WATER", 75, 30, 40, 10, 1, "~")
+        elif name == "MEGALODON":
+            return WaterPokemon("MEGALODON", "WATER", 100, 45, 45, 20, 1, "~")
+    elif type == "EARTH":
+        if name == "SPROUT":
+            return EarthPokemon("SPROUT", "EARTH", 20, 5, 0, 30, 1, "^")
+        elif name == "POISON IVY":
+            return EarthPokemon("POISON IVY", "EARTH", 40, 30, 0, 35, 1, "^")
+        elif name == "GIANT SEQUOIA":
+            return EarthPokemon("GIANT SEQUOIA", "EARTH", 45, 25, 0, 45, 1, "^")
+        elif name == "BIGFOOT":
+            return EarthPokemon("BIGFOOT", "EARTH", 100, 35, 0, 60, 1, "^")
+    elif type == "NORMAL":
+        if name == "MOUSE":
+            return NormalPokemon("MOUSE", "NORMAL", 30, 10, 15, 0, 1, "*")
+        elif name == "HAWK":
+            return NormalPokemon("HAWK", "NORMAL", 50, 25, 20, 0, 1, "*")
+        elif name == "WOLF":
+            return NormalPokemon("WOLF", "NORMAL", 90, 30, 20, 10, 1, "*")
+        elif name == "BEAR":
+            return NormalPokemon("BEAR", "NORMAL", 150, 40, 10, 30, 1, "*")
 
 
 # test = ["MOUSE", "NESSIE"]
@@ -105,41 +145,29 @@ populated_playerA_inv = []
 #playerOneProfile is the saved list of pokemon names in previous safe file
 #Go through the list and find the pokemon previously caught
 for name in playerOneProfile[1]:
-    for pokemon in list_of_pokemon_types:
-        if pokemon.getName() == name:
-            #Add the found pokemon to the array
-            populated_playerA_inv.append(pokemon)
+    if len(name) > 1:
+        pass_variable = name.strip()
+        populated_playerA_inv.append(create_pokemon(pass_variable))
             
+# for i in range(len(playerOneProfile[1])):
+#     if len(playerOneProfile[1][i]) > 1:
+#         pass_variable = playerOneProfile[1][i].strip()
+#         populated_playerA_inv.append(create_pokemon(pass_variable, playerOneProfile[-1][i]))            
+
 #Delcare the array that the player's inventory that pokemon will be adding into            
 # test = ["SPROUT", "MEGALODON"]
 populated_playerB_inv = []
 #playerTwoProfile is the saved list of pokemon names in previous safe file
 #Go through the list and find the pokemon previously caught
 for name in playerTwoProfile[1]:
-    for pokemon in list_of_pokemon_types:
-        if pokemon.getName() == name:
-            #Add the found pokemon to the array
-            populated_playerB_inv.append(pokemon)
+    if len(name) > 1:
+        pass_variable = name.strip()
+        populated_playerB_inv.append(create_pokemon(pass_variable))
 
 #Creating two player objects
-playerA = Player(playerOneProfile[0][0], int(playerOneProfile[3][0]), int(playerOneProfile[3][1]), playerOneProfile[1], playerOneProfile[2][0])
-playerB = Player(playerTwoProfile[0][0], int(playerTwoProfile[3][0]), int(playerTwoProfile[3][1]), playerTwoProfile[1], playerOneProfile[2][0])
+playerA = Player(playerOneProfile[0][0], int(playerOneProfile[3][1]), int(playerOneProfile[3][0]), populated_playerA_inv, playerOneProfile[2][0])
+playerB = Player(playerTwoProfile[0][0], int(playerTwoProfile[3][1]), int(playerTwoProfile[3][0]), populated_playerB_inv, playerOneProfile[2][0])
 
-#Testing player movement
-# print(playerA.getName(), playerA.getX(), playerA.getY(), playerA.getInventory())
-# playerA.moveRight()
-# print(playerA.getX())
-
-# # #Sample training 
-# print(pk_mouse.getName())
-# print(pk_mouse.getDamage())
-# pk_mouse.train()
-# print(pk_mouse.getDamage())
-
-#           Map
-#           earth
-#    water  center  fire
-#           city
 
 #Creation of the board
 board = [[" ", " ", " ", " ", " ", "^", "^", "^", "^", "^", " ", " ", " ", " ", " "],
@@ -192,18 +220,21 @@ def printBoard():
 #Prompting the players for a turn
 turncount = 0
 action = ""
+#Printing the board for the start of the game  
+#Assigning original or loaded locations of the Players
+board[playerA.getY()][playerA.getX()] = "A"
+board[playerB.getY()][playerB.getX()] = "B"
+printBoard()
 while (action != "quit"):
     if turncount % 2 == 0:
         name = "A"
     else:
         name = "B"
     
-    #Assigning original or loaded locations of the Players
-    board[playerA.getY()][playerA.getX()] = "A"
-    board[playerB.getY()][playerB.getX()] = "B"
     
-    #Printing the board for the start of the game    
-    printBoard()
+    
+      
+    
     
     action = input(f"Player {name} please enter an option (inventory/move/train/quit): ")
     
@@ -257,6 +288,7 @@ while (action != "quit"):
             print("Sorry, that move is not inbounds! Please try again!")
             turncount -=1
     
+
     elif action == "inventory":
         if name == "A":
             playerA.displayInventory()
@@ -322,35 +354,40 @@ while (action != "quit"):
     turncount += 1
 
 print("Thank you for playing the Pokemon Game!")
-        
-            
 
-with open('player_data.txt', 'w') as datFile:
-    datFile.write(f'{playerA.getName()}\n')
-    for i in range(len(playerA.getInventory())):
-        datFile.write(f'{playerA.getInventory()[i].getName()}{playerA.getInventory()[i].getLevel()}  ')
-        datFile.write(f'\n')
-    datFile.write(f'{playerA.getBiome()}\n')
-    datFile.write(f'{playerA.getX}  {playerA.getY}\n')
-    datFile.write('---\n')
-    datFile.write(f'{playerB.getName()}\n')
-    for i in range(len(playerB.getInventory())):
-        datFile.write(f'{playerB.getInventory()[i].getName()}{playerB.getInventory()[i].getLevel()}  ')
-        datFile.write(f'\n')
-    datFile.write(f'{playerB.getBiome()}\n')
-    datFile.write(f'{playerB.getX}  {playerB.getY}\n')
+#Resets the save file so the program can save new data
+open('player_data.txt', 'w').close()  # Clear the file before saving data
+
+# Save data for playerA and playerB
+playerA.saveData()
+playerB.saveData()
+
+# with open('player_data.txt', 'w') as datFile:
+#     datFile.write(f'{playerA.getName()}\n')
+#     for i in range(len(playerA.getInventory())):
+#         datFile.write(f'{playerA.getInventory()[i].getName()}{playerA.getInventory()[i].getLevel()}  ')
+#         datFile.write(f'\n')
+#     datFile.write(f'{playerA.getBiome()}\n')
+#     datFile.write(f'{playerA.getX}  {playerA.getY}\n')
+#     datFile.write('---\n')
+#     datFile.write(f'{playerB.getName()}\n')
+#     for i in range(len(playerB.getInventory())):
+#         datFile.write(f'{playerB.getInventory()[i].getName()}{playerB.getInventory()[i].getLevel()}  ')
+#         datFile.write(f'\n')
+#     datFile.write(f'{playerB.getBiome()}\n')
+#     datFile.write(f'{playerB.getX}  {playerB.getY}\n')
     
     
-    '''for i in range(len(playerOneProfile)):
-        for j in range(len(playerOneProfile[i])):
-            datFile.write(f'{playerOneProfile[i][j]}')
-            if playerOneProfile[i][j] in poke_roster:
-                datFile.write(f'{}')
-            datFile.write('  ')
-        datFile.write('\n')
-    datFile.write(f'---\n')
-    for i in range(len(playerTwoProfile)):
-        for j in range(len(playerTwoProfile[i])):
-            datFile.write(f'{playerTwoProfile[i][j]}')
-            datFile.write(f'  ')
-        datFile.write('\n')'''
+#     '''for i in range(len(playerOneProfile)):
+#         for j in range(len(playerOneProfile[i])):
+#             datFile.write(f'{playerOneProfile[i][j]}')
+#             if playerOneProfile[i][j] in poke_roster:
+#                 datFile.write(f'{}')
+#             datFile.write('  ')
+#         datFile.write('\n')
+#     datFile.write(f'---\n')
+#     for i in range(len(playerTwoProfile)):
+#         for j in range(len(playerTwoProfile[i])):
+#             datFile.write(f'{playerTwoProfile[i][j]}')
+#             datFile.write(f'  ')
+#         datFile.write('\n')'''
