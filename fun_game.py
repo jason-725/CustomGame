@@ -59,37 +59,39 @@ while True:
         playerTwoProfile.append(playerTwoLevels)
         break
     elif choice ==  'N':
-        playerOneProfile = [['A'], [], ['.'], [5, 9]]
-        playerTwoProfile = [['B'], [], ['.'], [9, 5]]
+        populated_playerA_inv = []
+        populated_playerB_inv = []
+        playerOneProfile = [['A'], populated_playerA_inv, ['.'], [5, 9]]
+        playerTwoProfile = [['B'], populated_playerB_inv, ['.'], [9, 5]]
         break
 poke_roster = ['MOUSE', 'HAWK', 'WOLF', 'BEAR', 'EMBER', 'FLAME DWELLER', 'DRAGON', 'PHOENIX', 'CLAM', 'SWORDFISH', 'NESSIE', 'MEGALODON', 'SPROUT', 'POISON IVY', 'GIANT SEQUOIA', 'BIGFOOT', 'FRODO SPEARS']
 
 #Creating 4 normal pokemon, normal pokemon generally specialize in HEALTH
-pk_mouse = Pokemon("MOUSE", "NORMAL", 30, 10, 15, 0, 1, "*")
-pk_hawk = Pokemon("HAWK", "NORMAL", 50, 25, 20, 0, 1, "*")
-pk_wolf = Pokemon("WOLF", "NORMAL", 90, 30, 20, 10, 1, "*")
-pk_bear = Pokemon("BEAR", "NORMAL", 150, 40, 10, 30, 1, "*")
+pk_mouse = Pokemon("MOUSE", "NORMAL", 30, 10, 15, 0, 1, "*", 4)
+pk_hawk = Pokemon("HAWK", "NORMAL", 50, 25, 20, 0, 1, "*", 4)
+pk_wolf = Pokemon("WOLF", "NORMAL", 90, 30, 20, 10, 1, "*", 4)
+pk_bear = Pokemon("BEAR", "NORMAL", 150, 40, 10, 30, 1, "*", 4)
 
 #Creating 4 fire pokemon, fire pokemon generally specialize in DAMAGE
-pk_ember = Pokemon("EMBER", "FIRE", 15, 25, 5, 0, 1, "&")
-pk_fire_dweller = Pokemon("FLAME DWELLER", "FIRE", 30, 30, 0, 15, 1, "&")
-pk_dragon = Pokemon("DRAGON", "FIRE", 60, 45, 15, 10, 1, "&")
-pk_phoenix = Pokemon("PHOENIX", "FIRE", 75, 65, 10, 15, 1, "&")
+pk_ember = Pokemon("EMBER", "FIRE", 15, 25, 5, 0, 1, "&", 4)
+pk_fire_dweller = Pokemon("FLAME DWELLER", "FIRE", 30, 30, 0, 15, 1, "&", 4)
+pk_dragon = Pokemon("DRAGON", "FIRE", 60, 45, 15, 10, 1, "&", 4)
+pk_phoenix = Pokemon("PHOENIX", "FIRE", 75, 65, 10, 15, 2, "&", 4)
 
 #Creating 4 water pokemon, water pokemon generally specialize in DODGE
-pk_clam = Pokemon("CLAM", "WATER", 25, 10, 30, 15, 1, "~")
-pk_swordfish = Pokemon("SWORDFISH", "WATER", 45, 25, 35, 0, 1, "~")
-pk_nessie = Pokemon("NESSIE", "WATER", 75, 30, 40, 10, 1, "~")
-pk_megalodon = Pokemon("MEGALODON", "WATER", 100, 45, 45, 20, 1, "~")
+pk_clam = Pokemon("CLAM", "WATER", 25, 10, 30, 15, 1, "~", 4)
+pk_swordfish = Pokemon("SWORDFISH", "WATER", 45, 25, 35, 0, 1, "~", 4)
+pk_nessie = Pokemon("NESSIE", "WATER", 75, 30, 40, 10, 1, "~", 4)
+pk_megalodon = Pokemon("MEGALODON", "WATER", 100, 45, 45, 20, 1, "~", 4)
 
 #Creating 4 earth pokemon, earth pokemon generally specialize in DEFENSE
-pk_sprout = Pokemon("SPROUT", "EARTH", 20, 5, 0, 30, 1, "^")
-pk_poison_ivy = Pokemon("POISON IVY", "EARTH", 40, 30, 0, 35, 1, "^")
-pk_giant_sequoia = Pokemon("GIANT SEQUOIA", "EARTH", 45, 25, 0, 45, 1, "^")
-pk_bigfoot = Pokemon("BIGFOOT", "EARTH", 100, 35, 0, 60, 1, "^")
+pk_sprout = Pokemon("SPROUT", "EARTH", 20, 5, 0, 30, 1, "^", 4)
+pk_poison_ivy = Pokemon("POISON IVY", "EARTH", 40, 30, 0, 35, 1, "^", 4)
+pk_giant_sequoia = Pokemon("GIANT SEQUOIA", "EARTH", 45, 25, 0, 45, 1, "^", 4)
+pk_bigfoot = Pokemon("BIGFOOT", "EARTH", 100, 35, 0, 60, 1, "^", 4)
 
 #Creating THE legendary pokemon
-pk_frodo = Pokemon("FRODO SPEARS", "LEGENDARY", 200, 100, 0, 0, 1, ".")
+pk_frodo = Pokemon("FRODO SPEARS", "LEGENDARY", 200, 100, 0, 0, 1, ".", 4)
 
 #create a list of the pokemon object to sort through
 list_of_pokemon_types = [pk_mouse, pk_hawk, pk_wolf, pk_bear, 
@@ -122,8 +124,8 @@ for name in playerTwoProfile[1]:
             populated_playerB_inv.append(pokemon)
 
 #Creating two player objects
-playerA = Player(playerOneProfile[0][0], int(playerOneProfile[3][0]), int(playerOneProfile[3][1]), playerOneProfile[1], playerOneProfile[2][0])
-playerB = Player(playerTwoProfile[0][0], int(playerTwoProfile[3][0]), int(playerTwoProfile[3][1]), playerTwoProfile[1], playerOneProfile[2][0])
+playerA = Player(playerOneProfile[0][0], int(playerOneProfile[3][0]), int(playerOneProfile[3][1]), populated_playerA_inv, playerOneProfile[2][0])
+playerB = Player(playerTwoProfile[0][0], int(playerTwoProfile[3][0]), int(playerTwoProfile[3][1]), populated_playerB_inv, playerOneProfile[2][0])
 
 #Testing player movement
 # print(playerA.getName(), playerA.getX(), playerA.getY(), playerA.getInventory())
