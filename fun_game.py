@@ -108,40 +108,40 @@ def create_pokemon(name):
     # Create the correct subclass based on type
     if type == "FIRE":
         if name == "EMBER":
-            return FirePokemon("EMBER", "FIRE", 15, 25, 5, 0, 1, "&")
+            return FirePokemon("EMBER", "FIRE", 15, 25, 5, 0, 1, "&", 4)
         elif name == "FLAME DWELLER":
-            return FirePokemon("FLAME DWELLER", "FIRE", 15, 25, 5, 0, 1, "&")
+            return FirePokemon("FLAME DWELLER", "FIRE", 15, 25, 5, 0, 1, "&", 4)
         elif name == "DRAGON":
-            return FirePokemon("DRAGON", "FIRE", 30, 30, 0, 15, 1, "&")
+            return FirePokemon("DRAGON", "FIRE", 30, 30, 0, 15, 1, "&", 4)
         elif name == "PHOENIX":
-            return FirePokemon("PHOENIX", "FIRE", 75, 65, 10, 15, 1, "&")
+            return FirePokemon("PHOENIX", "FIRE", 75, 65, 10, 15, 1, "&", 4)
     elif type == "WATER":
         if name == "CLAM":
-            return WaterPokemon("CLAM", "WATER", 25, 10, 30, 15, 1, "~")
+            return WaterPokemon("CLAM", "WATER", 25, 10, 30, 15, 1, "~", 4)
         elif name == "SWORDFISH":
-            return WaterPokemon("SWORDFISH", "WATER", 45, 25, 35, 0, 1, "~")
+            return WaterPokemon("SWORDFISH", "WATER", 45, 25, 35, 0, 1, "~", 4)
         elif name == "NESSIE":
-            return WaterPokemon("NESSIE", "WATER", 75, 30, 40, 10, 1, "~")
+            return WaterPokemon("NESSIE", "WATER", 75, 30, 40, 10, 1, "~", 4)
         elif name == "MEGALODON":
-            return WaterPokemon("MEGALODON", "WATER", 100, 45, 45, 20, 1, "~")
+            return WaterPokemon("MEGALODON", "WATER", 100, 45, 45, 20, 1, "~", 4)
     elif type == "EARTH":
         if name == "SPROUT":
-            return EarthPokemon("SPROUT", "EARTH", 20, 5, 0, 30, 1, "^")
+            return EarthPokemon("SPROUT", "EARTH", 20, 5, 0, 30, 1, "^", 4)
         elif name == "POISON IVY":
-            return EarthPokemon("POISON IVY", "EARTH", 40, 30, 0, 35, 1, "^")
+            return EarthPokemon("POISON IVY", "EARTH", 40, 30, 0, 35, 1, "^", 4)
         elif name == "GIANT SEQUOIA":
-            return EarthPokemon("GIANT SEQUOIA", "EARTH", 45, 25, 0, 45, 1, "^")
+            return EarthPokemon("GIANT SEQUOIA", "EARTH", 45, 25, 0, 45, 1, "^", 4)
         elif name == "BIGFOOT":
-            return EarthPokemon("BIGFOOT", "EARTH", 100, 35, 0, 60, 1, "^")
+            return EarthPokemon("BIGFOOT", "EARTH", 100, 35, 0, 60, 1, "^", 4)
     elif type == "NORMAL":
         if name == "MOUSE":
-            return NormalPokemon("MOUSE", "NORMAL", 30, 10, 15, 0, 1, "*")
+            return NormalPokemon("MOUSE", "NORMAL", 30, 10, 15, 0, 1, "*", 4)
         elif name == "HAWK":
-            return NormalPokemon("HAWK", "NORMAL", 50, 25, 20, 0, 1, "*")
+            return NormalPokemon("HAWK", "NORMAL", 50, 25, 20, 0, 1, "*", 4)
         elif name == "WOLF":
-            return NormalPokemon("WOLF", "NORMAL", 90, 30, 20, 10, 1, "*")
+            return NormalPokemon("WOLF", "NORMAL", 90, 30, 20, 10, 1, "*", 4)
         elif name == "BEAR":
-            return NormalPokemon("BEAR", "NORMAL", 150, 40, 10, 30, 1, "*")
+            return NormalPokemon("BEAR", "NORMAL", 150, 40, 10, 30, 1, "*", 4)
 
 
 # test = ["MOUSE", "NESSIE"]
@@ -627,7 +627,8 @@ while (action != "quit"):
                 playerB.enterBiome()
 
             #Checking for a battle
-            battleCheck()
+            battlestatus = battleCheck()
+                
     
         else:
             print("Sorry, that move is not inbounds! Please try again!")
